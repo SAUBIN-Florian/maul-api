@@ -44,16 +44,6 @@ def insert_data(request):
                     brand=brand,
                 )
                 product.categories.add(*categories)
-            else:
-                product = Product.objects.create(
-                    ean=0,
-                    name=row[2],
-                    link_url=row[1],
-                    img_url=row[7],
-                    quantity=row[3],
-                    brand=brand,
-                )
-                product.categories.add(*categories)
 
         print("Database all set !")
         return redirect("admin/")
@@ -110,7 +100,7 @@ class ProductApiView(ReadOnlyModelViewSet):
         # Query products by brand ex: https://my_api/api/product/?brand=my_product_brand/
         product_brand = self.request.GET.get("brand")
         if product_brand is not None:
-            queryset = products.filter(brand__name__contains=product_brand)
+            queryset = products.filter(brand__name__exact=product_brand)
 
         # Query products by list of categories ex: https://my_api/api/product/?categories=my_product_categories_list/
         product_category = self.request.GET.get("categories")
