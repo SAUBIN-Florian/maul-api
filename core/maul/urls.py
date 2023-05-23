@@ -10,5 +10,6 @@ router.register("product", api_views.ProductApiView, basename="product")
 
 urlpatterns = [
     path("insert-data/", api_views.insert_data, name="insert_data"),
+    path("", api_views.APIIndex.as_view(), name="index"),
     path("", include(router.urls))
 ]

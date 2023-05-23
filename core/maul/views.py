@@ -1,6 +1,9 @@
 import csv
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import user_passes_test
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from .models import Brand, Category, Product
@@ -47,6 +50,17 @@ def insert_data(request):
 
         print("Database all set !")
         return redirect("admin/")
+
+
+class APIIndex(APIView):
+    def get(self, request):
+        version = "1.0.0"
+        data = {
+            "version": version,
+            "info": "This API was created to allow developers to access "
+                    "products present in retails in France, classified by brands and categories."
+        }
+        return Response(data)
 
 
 class BrandApiView(ReadOnlyModelViewSet):
