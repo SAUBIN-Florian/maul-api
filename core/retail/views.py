@@ -25,6 +25,7 @@ def insert_data(request):
 
         print("Inserting data...")
         for row in reader:
+            count = 0
             new_brand = row[4].capitalize()
             new_categories = row[5].split(",")
 
@@ -50,6 +51,7 @@ def insert_data(request):
                     brand=brand,
                 )
                 product.categories.add(*categories)
+                count += 1
 
         print("Database all set !")
         return redirect("admin/")
