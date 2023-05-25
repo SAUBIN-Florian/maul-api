@@ -54,7 +54,7 @@ def insert_data(request):
                 count += 1
 
         print("Database all set !")
-        return redirect("admin/")
+        return redirect("retail:index")
 
 
 @authentication_classes([JWTAuthentication])
@@ -64,6 +64,9 @@ class APIIndex(APIView):
         version = "1.0.0"
         data = {
             "version": version,
+            "number_of_products": Product.objects.count(),
+            "number_of_brands": Brand.objects.count(),
+            "number_of_categories": Category.objects.count(),
             "info": "This API was created to allow developers to access "
                     "products present in retails in France, classified by brands and categories."
         }

@@ -10,9 +10,15 @@ This documentation provides an overview of the endpoints available in the API cr
 
 ## Base URL
 
-The base URL for all API endpoints is `https://my-api-url.com/`.
+The base URL for all API endpoints is `https://work-in-progress.xyz/`.
 
 ## Endpoints
+
+### Api
+
+#### `GET /api/`
+
+Retrieve globals informations from the API, like version, or the count of products in the database
 
 ### Brand
 
@@ -82,6 +88,45 @@ Here are some examples of how to use the API endpoints:
   - `GET /api/product/?categories=Produits laitiers,Desserts`
 
 Please note that the API supports pagination, limiting the number of results to 25 per request.
+
+## Authentication & Authorization
+
+This API is protected with JWT (JSON Web Tokens), endpoints are only available if you are registered (handle the tokens with the front-end)
+
+### Register
+
+#### `POST /api/user/register/`
+
+Allow to create an account for the user, the required inputs are:
+
+`{
+    "email": "example@test.xyz",
+    "user_name": "John Doe",
+    "password": "my_@wesome_@nd_very_secured_p@ssword"
+}`
+
+### Login
+
+#### `POST /api/user/login/`
+
+Allow to log in to the API database, the required inputs are:
+
+`{
+    "email": "example@test.xyz",
+    "password": "my_@wesome_@nd_very_secured_p@ssword"
+}`
+
+This request will return 2 tokens, handle them either in local storage or cookies when you want to connect to the API
+
+### Token Refresh
+
+#### `POST /api/user/token/refresh/`
+
+For refreshing a token if needed, required the old token:
+
+`{
+    "refresh": "some_previous_token"
+}`
 
 ## Additional Endpoint
 
