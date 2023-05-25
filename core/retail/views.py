@@ -2,9 +2,12 @@ import csv
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import user_passes_test
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Brand, Category, Product
 from .serializers import BrandSerializer, CategorySerializer, ProductSerializer
@@ -52,6 +55,8 @@ def insert_data(request):
         return redirect("admin/")
 
 
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class APIIndex(APIView):
     def get(self, request):
         version = "1.0.0"
@@ -63,6 +68,8 @@ class APIIndex(APIView):
         return Response(data)
 
 
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class BrandApiView(ReadOnlyModelViewSet):
 
     serializer_class = BrandSerializer
@@ -78,6 +85,8 @@ class BrandApiView(ReadOnlyModelViewSet):
         return queryset
 
 
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class CategoryApiView(ReadOnlyModelViewSet):
 
     serializer_class = CategorySerializer
@@ -93,6 +102,8 @@ class CategoryApiView(ReadOnlyModelViewSet):
         return queryset
 
 
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
 class ProductApiView(ReadOnlyModelViewSet):
 
     serializer_class = ProductSerializer
